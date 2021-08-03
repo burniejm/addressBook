@@ -15,6 +15,13 @@
 		EB095A4926B9CD0F00449EE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB095A4726B9CD0F00449EE8 /* LaunchScreen.storyboard */; };
 		EB095A5426B9CD0F00449EE8 /* SignosInterviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB095A5326B9CD0F00449EE8 /* SignosInterviewTests.swift */; };
 		EB095A5F26B9CD0F00449EE8 /* SignosInterviewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB095A5E26B9CD0F00449EE8 /* SignosInterviewUITests.swift */; };
+		EB5EC98526B9D36000C3E209 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC98426B9D36000C3E209 /* Coordinator.swift */; };
+		EB5EC98726B9D37500C3E209 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC98626B9D37500C3E209 /* AppCoordinator.swift */; };
+		EB5EC98A26B9D3E700C3E209 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC98926B9D3E700C3E209 /* MainCoordinator.swift */; };
+		EB5EC98D26B9D4A400C3E209 /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC98C26B9D4A400C3E209 /* UIStoryboard+Extensions.swift */; };
+		EB5EC99026B9D57D00C3E209 /* AddressListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC98F26B9D57D00C3E209 /* AddressListViewController.swift */; };
+		EB5EC99226B9DD0700C3E209 /* AddresListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99126B9DD0700C3E209 /* AddresListViewModel.swift */; };
+		EB5EC99526B9DD7300C3E209 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99426B9DD7300C3E209 /* AddressItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +56,13 @@
 		EB095A5A26B9CD0F00449EE8 /* SignosInterviewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SignosInterviewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB095A5E26B9CD0F00449EE8 /* SignosInterviewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignosInterviewUITests.swift; sourceTree = "<group>"; };
 		EB095A6026B9CD1000449EE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB5EC98426B9D36000C3E209 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		EB5EC98626B9D37500C3E209 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		EB5EC98926B9D3E700C3E209 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		EB5EC98C26B9D4A400C3E209 /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
+		EB5EC98F26B9D57D00C3E209 /* AddressListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListViewController.swift; sourceTree = "<group>"; };
+		EB5EC99126B9DD0700C3E209 /* AddresListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddresListViewModel.swift; sourceTree = "<group>"; };
+		EB5EC99426B9DD7300C3E209 /* AddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +113,13 @@
 		EB095A3B26B9CD0C00449EE8 /* SignosInterview */ = {
 			isa = PBXGroup;
 			children = (
+				EB5EC99326B9DD3600C3E209 /* Model */,
+				EB5EC98B26B9D47400C3E209 /* Extensions */,
+				EB5EC98826B9D3D000C3E209 /* Main */,
+				EB5EC98326B9D34900C3E209 /* Coordination */,
 				EB095A3C26B9CD0C00449EE8 /* AppDelegate.swift */,
 				EB095A3E26B9CD0C00449EE8 /* SceneDelegate.swift */,
 				EB095A4026B9CD0C00449EE8 /* ViewController.swift */,
-				EB095A4226B9CD0C00449EE8 /* Main.storyboard */,
 				EB095A4526B9CD0F00449EE8 /* Assets.xcassets */,
 				EB095A4726B9CD0F00449EE8 /* LaunchScreen.storyboard */,
 				EB095A4A26B9CD0F00449EE8 /* Info.plist */,
@@ -126,6 +143,50 @@
 				EB095A6026B9CD1000449EE8 /* Info.plist */,
 			);
 			path = SignosInterviewUITests;
+			sourceTree = "<group>";
+		};
+		EB5EC98326B9D34900C3E209 /* Coordination */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC98426B9D36000C3E209 /* Coordinator.swift */,
+				EB5EC98626B9D37500C3E209 /* AppCoordinator.swift */,
+			);
+			path = Coordination;
+			sourceTree = "<group>";
+		};
+		EB5EC98826B9D3D000C3E209 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC98E26B9D54A00C3E209 /* AddressListViewController */,
+				EB095A4226B9CD0C00449EE8 /* Main.storyboard */,
+				EB5EC98926B9D3E700C3E209 /* MainCoordinator.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		EB5EC98B26B9D47400C3E209 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC98C26B9D4A400C3E209 /* UIStoryboard+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EB5EC98E26B9D54A00C3E209 /* AddressListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC98F26B9D57D00C3E209 /* AddressListViewController.swift */,
+				EB5EC99126B9DD0700C3E209 /* AddresListViewModel.swift */,
+			);
+			path = AddressListViewController;
+			sourceTree = "<group>";
+		};
+		EB5EC99326B9DD3600C3E209 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC99426B9DD7300C3E209 /* AddressItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +319,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5EC98526B9D36000C3E209 /* Coordinator.swift in Sources */,
+				EB5EC98A26B9D3E700C3E209 /* MainCoordinator.swift in Sources */,
 				EB095A4126B9CD0C00449EE8 /* ViewController.swift in Sources */,
+				EB5EC99026B9D57D00C3E209 /* AddressListViewController.swift in Sources */,
+				EB5EC98726B9D37500C3E209 /* AppCoordinator.swift in Sources */,
+				EB5EC99526B9DD7300C3E209 /* AddressItem.swift in Sources */,
 				EB095A3D26B9CD0C00449EE8 /* AppDelegate.swift in Sources */,
 				EB095A3F26B9CD0C00449EE8 /* SceneDelegate.swift in Sources */,
+				EB5EC98D26B9D4A400C3E209 /* UIStoryboard+Extensions.swift in Sources */,
+				EB5EC99226B9DD0700C3E209 /* AddresListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
