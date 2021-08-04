@@ -25,7 +25,7 @@ final class MainCoordinator: Coordinator {
 
     var addressListViewController: AddressListViewController {
         let viewController: AddressListViewController = UIStoryboard.main.getVC()
-        viewController.viewModel = AddressListViewModel()
+        viewController.viewModel = AddressListViewModel(delegate: self, persistanceProvider: PlacesPersistanceProviderUserDefaults())
         return viewController
     }
 
@@ -37,11 +37,10 @@ final class MainCoordinator: Coordinator {
         restart()
     }
 
-    private func showClass() {
-//        let controller: ClassViewController = UIStoryboard.class.getVC()
-//        controller.viewModel = ClassViewModel(item: item, apiClient: apiClient, keychainService: keychainService, healthMetricsService: healthMetricsService, delegate: self)
-//        controller.viewModel?.viewController = controller
-//        rootNavController?.pushViewController(controller, animated: true)
+    private func showNewAddress() {
+        let controller: SearchAddressViewController = UIStoryboard.main.getVC()
+        controller.viewModel = SearchAddressViewModel()
+        rootNavController?.pushViewController(controller, animated: true)
     }
 
     private func restart() {
@@ -49,3 +48,8 @@ final class MainCoordinator: Coordinator {
     }
 }
 
+extension MainCoordinator: AddressListViewModelDelegate {
+    func didSelectNewAddress() {
+        showNewAddress()
+    }
+}

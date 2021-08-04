@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		EB095A3D26B9CD0C00449EE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB095A3C26B9CD0C00449EE8 /* AppDelegate.swift */; };
 		EB095A3F26B9CD0C00449EE8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB095A3E26B9CD0C00449EE8 /* SceneDelegate.swift */; };
-		EB095A4126B9CD0C00449EE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB095A4026B9CD0C00449EE8 /* ViewController.swift */; };
 		EB095A4426B9CD0C00449EE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB095A4226B9CD0C00449EE8 /* Main.storyboard */; };
 		EB095A4626B9CD0F00449EE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB095A4526B9CD0F00449EE8 /* Assets.xcassets */; };
 		EB095A4926B9CD0F00449EE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB095A4726B9CD0F00449EE8 /* LaunchScreen.storyboard */; };
@@ -22,6 +21,12 @@
 		EB5EC99026B9D57D00C3E209 /* AddressListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC98F26B9D57D00C3E209 /* AddressListViewController.swift */; };
 		EB5EC99226B9DD0700C3E209 /* AddresListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99126B9DD0700C3E209 /* AddresListViewModel.swift */; };
 		EB5EC99526B9DD7300C3E209 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99426B9DD7300C3E209 /* AddressItem.swift */; };
+		EB5EC99826BA1C6C00C3E209 /* SearchAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99726BA1C6C00C3E209 /* SearchAddressViewController.swift */; };
+		EB5EC99B26BA215600C3E209 /* PlacesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99A26BA215600C3E209 /* PlacesService.swift */; };
+		EB5EC99E26BA276D00C3E209 /* PlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99D26BA276D00C3E209 /* PlacesModel.swift */; };
+		EB5EC9A026BA36FB00C3E209 /* SearchAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC99F26BA36FB00C3E209 /* SearchAddressViewModel.swift */; };
+		EB5EC9A226BA480500C3E209 /* PlacesPersistanceProviderUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC9A126BA480500C3E209 /* PlacesPersistanceProviderUserDefaults.swift */; };
+		EB5EC9A426BA4BB800C3E209 /* Defaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC9A326BA4BB800C3E209 /* Defaults+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +50,6 @@
 		EB095A3926B9CD0C00449EE8 /* SignosInterview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SignosInterview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB095A3C26B9CD0C00449EE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB095A3E26B9CD0C00449EE8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EB095A4026B9CD0C00449EE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EB095A4326B9CD0C00449EE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EB095A4526B9CD0F00449EE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB095A4826B9CD0F00449EE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,6 +67,12 @@
 		EB5EC98F26B9D57D00C3E209 /* AddressListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListViewController.swift; sourceTree = "<group>"; };
 		EB5EC99126B9DD0700C3E209 /* AddresListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddresListViewModel.swift; sourceTree = "<group>"; };
 		EB5EC99426B9DD7300C3E209 /* AddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
+		EB5EC99726BA1C6C00C3E209 /* SearchAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
+		EB5EC99A26BA215600C3E209 /* PlacesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesService.swift; sourceTree = "<group>"; };
+		EB5EC99D26BA276D00C3E209 /* PlacesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesModel.swift; sourceTree = "<group>"; };
+		EB5EC99F26BA36FB00C3E209 /* SearchAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressViewModel.swift; sourceTree = "<group>"; };
+		EB5EC9A126BA480500C3E209 /* PlacesPersistanceProviderUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesPersistanceProviderUserDefaults.swift; sourceTree = "<group>"; };
+		EB5EC9A326BA4BB800C3E209 /* Defaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,13 +123,13 @@
 		EB095A3B26B9CD0C00449EE8 /* SignosInterview */ = {
 			isa = PBXGroup;
 			children = (
+				EB5EC99926BA214600C3E209 /* Services */,
 				EB5EC99326B9DD3600C3E209 /* Model */,
 				EB5EC98B26B9D47400C3E209 /* Extensions */,
 				EB5EC98826B9D3D000C3E209 /* Main */,
 				EB5EC98326B9D34900C3E209 /* Coordination */,
 				EB095A3C26B9CD0C00449EE8 /* AppDelegate.swift */,
 				EB095A3E26B9CD0C00449EE8 /* SceneDelegate.swift */,
-				EB095A4026B9CD0C00449EE8 /* ViewController.swift */,
 				EB095A4526B9CD0F00449EE8 /* Assets.xcassets */,
 				EB095A4726B9CD0F00449EE8 /* LaunchScreen.storyboard */,
 				EB095A4A26B9CD0F00449EE8 /* Info.plist */,
@@ -157,6 +167,7 @@
 		EB5EC98826B9D3D000C3E209 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				EB5EC99626BA1C5700C3E209 /* SearchAddressViewController */,
 				EB5EC98E26B9D54A00C3E209 /* AddressListViewController */,
 				EB095A4226B9CD0C00449EE8 /* Main.storyboard */,
 				EB5EC98926B9D3E700C3E209 /* MainCoordinator.swift */,
@@ -168,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				EB5EC98C26B9D4A400C3E209 /* UIStoryboard+Extensions.swift */,
+				EB5EC9A326BA4BB800C3E209 /* Defaults+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -184,9 +196,28 @@
 		EB5EC99326B9DD3600C3E209 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB5EC99D26BA276D00C3E209 /* PlacesModel.swift */,
 				EB5EC99426B9DD7300C3E209 /* AddressItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EB5EC99626BA1C5700C3E209 /* SearchAddressViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC99726BA1C6C00C3E209 /* SearchAddressViewController.swift */,
+				EB5EC99F26BA36FB00C3E209 /* SearchAddressViewModel.swift */,
+			);
+			path = SearchAddressViewController;
+			sourceTree = "<group>";
+		};
+		EB5EC99926BA214600C3E209 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EB5EC99A26BA215600C3E209 /* PlacesService.swift */,
+				EB5EC9A126BA480500C3E209 /* PlacesPersistanceProviderUserDefaults.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,14 +350,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5EC99B26BA215600C3E209 /* PlacesService.swift in Sources */,
 				EB5EC98526B9D36000C3E209 /* Coordinator.swift in Sources */,
 				EB5EC98A26B9D3E700C3E209 /* MainCoordinator.swift in Sources */,
-				EB095A4126B9CD0C00449EE8 /* ViewController.swift in Sources */,
+				EB5EC99826BA1C6C00C3E209 /* SearchAddressViewController.swift in Sources */,
 				EB5EC99026B9D57D00C3E209 /* AddressListViewController.swift in Sources */,
+				EB5EC99E26BA276D00C3E209 /* PlacesModel.swift in Sources */,
 				EB5EC98726B9D37500C3E209 /* AppCoordinator.swift in Sources */,
 				EB5EC99526B9DD7300C3E209 /* AddressItem.swift in Sources */,
+				EB5EC9A026BA36FB00C3E209 /* SearchAddressViewModel.swift in Sources */,
 				EB095A3D26B9CD0C00449EE8 /* AppDelegate.swift in Sources */,
 				EB095A3F26B9CD0C00449EE8 /* SceneDelegate.swift in Sources */,
+				EB5EC9A226BA480500C3E209 /* PlacesPersistanceProviderUserDefaults.swift in Sources */,
+				EB5EC9A426BA4BB800C3E209 /* Defaults+Extensions.swift in Sources */,
 				EB5EC98D26B9D4A400C3E209 /* UIStoryboard+Extensions.swift in Sources */,
 				EB5EC99226B9DD0700C3E209 /* AddresListViewModel.swift in Sources */,
 			);
@@ -505,13 +541,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z42862QX7H;
+				DEVELOPMENT_TEAM = Z42VJWF6Y2;
 				INFOPLIST_FILE = SignosInterview/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.macy.SignosInterview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Synapse.SignosInterview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -524,13 +560,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z42862QX7H;
+				DEVELOPMENT_TEAM = Z42VJWF6Y2;
 				INFOPLIST_FILE = SignosInterview/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.macy.SignosInterview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Synapse.SignosInterview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

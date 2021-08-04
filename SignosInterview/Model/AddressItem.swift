@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum AddressType: String {
+enum AddressType: String, Codable {
     case Gym
     case Restaurant
     case Supermarket
 }
 
-struct AddressItem {
+struct AddressItem: Equatable {
     let addressLine1: String
     let type: AddressType
 }

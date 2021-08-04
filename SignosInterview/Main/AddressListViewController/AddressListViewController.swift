@@ -11,9 +11,21 @@ class AddressListViewController: UIViewController {
 
     static let reuseIdentifier = "AddressListViewCell"
 
-    @IBOutlet var tableViewAddresses: UITableView!
-
     var viewModel: AddressListViewModel?
+
+    @IBOutlet private var tableViewAddresses: UITableView!
+
+    @IBAction func btnNewAddressPressed(_ sender: Any) {
+        viewModel?.onNewAddressPressed()
+    }
+
+    private lazy var segmentFilter: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: AddressFilter.allCases.map({ $0.rawValue }))
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.apportionsSegmentWidthsByContent = true
+        segmentedControl.addTarget(self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
+        return segmentedControl
+    }()
 
     override func viewDidLoad() {
         configureView()
@@ -21,6 +33,8 @@ class AddressListViewController: UIViewController {
     }
 
     private func configureView() {
+        self.title = "My Addresses"
+        self.navigationItem.titleView = segmentFilter
         self.tableViewAddresses.register(UITableViewCell.self, forCellReuseIdentifier: AddressListViewController.reuseIdentifier)
     }
 
@@ -28,6 +42,10 @@ class AddressListViewController: UIViewController {
         viewModel?.didUpdateAddressItems = { [weak self] in
             self?.tableViewAddresses.reloadSections([0], with: .automatic)
         }
+    }
+
+    @objc private func segmentValueChanged(_ sender: UISegmentedControl) {
+        viewModel?.filterType = AddressFilter.allCases[segmentFilter.selectedSegmentIndex]
     }
 }
 
@@ -37,20 +55,20 @@ extension AddressListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.addresses?.count ?? 0
+        return viewModel?.filteredAddresses?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AddressListViewController.reuseIdentifier, for: indexPath)
 
-        cell.textLabel?.text = viewModel?.addresses?[indexPath.row].addressLine1
+        cell.textLabel?.text = viewModel?.filteredAddresses?[indexPath.row].name
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completionHandler) in
-            self?.viewModel?.removeItem(index: indexPath.row)
+            self?.viewModel?.removeFilteredItem(index: indexPath.row)
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")

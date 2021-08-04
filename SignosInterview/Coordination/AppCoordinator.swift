@@ -18,15 +18,7 @@ class AppCoordinator: Coordinator {
     }
 
     func start() {
-        setupUI()
         showMainScreen()
-    }
-
-    func setupUI() {
-        // Set transparrent nav bar background
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().isTranslucent = true
     }
 }
 
