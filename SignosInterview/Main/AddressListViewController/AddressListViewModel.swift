@@ -68,6 +68,7 @@ class AddressListViewModel {
     }
 
     func onNewAddressPressed() {
+        expandedCells.removeAll()
         delegate?.didSelectNewAddress()
     }
 
