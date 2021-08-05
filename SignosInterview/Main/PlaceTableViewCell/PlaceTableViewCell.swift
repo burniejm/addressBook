@@ -56,7 +56,7 @@ class PlaceTableViewCell: UITableViewCell {
         selectionStyle = .none
 
         btnAdd.isHidden = !showAddButton
-        self.btnPhone.isHidden = true
+        btnPhone.isHidden = true
 
         lblAddress.text = placeVM.address()
         lblName.text = placeVM.name()

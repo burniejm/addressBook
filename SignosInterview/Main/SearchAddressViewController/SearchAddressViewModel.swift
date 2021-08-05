@@ -7,16 +7,11 @@
 
 import Foundation
 
-protocol SearchAddressViewModelDelegate {
-
-}
-
 class SearchAddressViewModel {
 
     private static let debounceInterval = 0.5
 
     private var debounceTimer: Timer?
-    private var delegate: SearchAddressViewModelDelegate
     private var persistenceProvider: PlacesPersistenceProvider
 
     var searchResults: [Place] = [Place]() {
@@ -40,8 +35,7 @@ class SearchAddressViewModel {
     var onSearchResultsChanged: (() -> Void)?
     var expandedCells = IndexSet()
 
-    init(delegate: SearchAddressViewModelDelegate, persistenceProvider: PlacesPersistenceProvider) {
-        self.delegate = delegate
+    init(persistenceProvider: PlacesPersistenceProvider) {
         self.persistenceProvider = persistenceProvider
     }
 

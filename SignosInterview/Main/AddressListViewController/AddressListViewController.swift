@@ -37,8 +37,7 @@ class AddressListViewController: UIViewController {
     }
 
     private func configureView() {
-        self.title = "My Addresses"
-        self.navigationItem.titleView = segmentFilter
+        navigationItem.titleView = segmentFilter
         tableViewAddresses.register(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: PlaceTableViewCell.reuseIdentifier)
     }
 

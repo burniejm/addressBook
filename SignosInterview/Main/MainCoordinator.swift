@@ -40,7 +40,7 @@ final class MainCoordinator: Coordinator {
 
     private func showNewAddress() {
         let controller: SearchAddressViewController = UIStoryboard.main.getVC()
-        controller.viewModel = SearchAddressViewModel(delegate: self, persistenceProvider: persistenceProvider)
+        controller.viewModel = SearchAddressViewModel(persistenceProvider: persistenceProvider)
         rootNavController?.pushViewController(controller, animated: true)
     }
 
@@ -53,8 +53,4 @@ extension MainCoordinator: AddressListViewModelDelegate {
     func didSelectNewAddress() {
         showNewAddress()
     }
-}
-
-extension MainCoordinator: SearchAddressViewModelDelegate {
-
 }
