@@ -9,11 +9,9 @@ import UIKit
 
 class AddressListViewController: UIViewController {
 
-    static let reuseIdentifier = "AddressListViewCell"
+    var viewModel: AddressListViewModel!
 
-    var viewModel: AddressListViewModel?
-
-    @IBOutlet private var tableViewAddresses: UITableView!
+    @IBOutlet private weak var tableViewAddresses: UITableView!
 
     @IBAction func btnNewAddressPressed(_ sender: Any) {
         viewModel?.onNewAddressPressed()
@@ -28,24 +26,30 @@ class AddressListViewController: UIViewController {
     }()
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         configureView()
         configureViewModel()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.onViewAppeared()
     }
 
     private func configureView() {
         self.title = "My Addresses"
         self.navigationItem.titleView = segmentFilter
-        self.tableViewAddresses.register(UITableViewCell.self, forCellReuseIdentifier: AddressListViewController.reuseIdentifier)
+        tableViewAddresses.register(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: PlaceTableViewCell.reuseIdentifier)
     }
 
     private func configureViewModel() {
-        viewModel?.didUpdateAddressItems = { [weak self] in
+        viewModel.didUpdateAddressItems = { [weak self] in
             self?.tableViewAddresses.reloadSections([0], with: .automatic)
         }
     }
 
     @objc private func segmentValueChanged(_ sender: UISegmentedControl) {
-        viewModel?.filterType = AddressFilter.allCases[segmentFilter.selectedSegmentIndex]
+        viewModel.filterType = AddressFilter.allCases[segmentFilter.selectedSegmentIndex]
     }
 }
 
@@ -55,13 +59,17 @@ extension AddressListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.filteredAddresses?.count ?? 0
+        return viewModel.filteredAddresses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AddressListViewController.reuseIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else {
+            return UITableViewCell()
+        }
 
-        cell.textLabel?.text = viewModel?.filteredAddresses?[indexPath.row].name
+        let place = viewModel.filteredAddresses[indexPath.row]
+
+        cell.configure(place: place, showAddButton: false, isExpanded: viewModel.expandedCells.contains(indexPath.row))
 
         return cell
     }
@@ -80,6 +88,8 @@ extension AddressListViewController: UITableViewDataSource {
 
 extension AddressListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row selected \(indexPath.row)")
+        tableView.deselectRow(at: indexPath, animated: false)
+        viewModel.rowSelected(index: indexPath.row)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

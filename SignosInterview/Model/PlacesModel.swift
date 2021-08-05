@@ -62,6 +62,7 @@ struct Place : Codable, Equatable {
         case rating = "rating"
         case reference = "reference"
         case types = "types"
+        case addressType = "addressType"
     }
 
     init(from decoder: Decoder) throws {
@@ -75,6 +76,7 @@ struct Place : Codable, Equatable {
         rating = try values.decodeIfPresent(Double.self, forKey: .rating)
         reference = try values.decodeIfPresent(String.self, forKey: .reference)
         types = try values.decodeIfPresent([String].self, forKey: .types)
+        addressType = try values.decodeIfPresent(AddressType.self, forKey: .addressType)
 
         //Map their types to mine
         guard let types = types else {
@@ -130,5 +132,89 @@ struct Photo : Codable {
         html_attributions = try values.decodeIfPresent([String].self, forKey: .html_attributions)
         photo_reference = try values.decodeIfPresent(String.self, forKey: .photo_reference)
         width = try values.decodeIfPresent(Int.self, forKey: .width)
+    }
+}
+
+struct PlaceDetailResponse : Codable {
+    let html_attributions : [String]?
+    let result : PlaceDetail?
+    let status : String?
+
+    enum CodingKeys: String, CodingKey {
+
+        case html_attributions = "html_attributions"
+        case result = "result"
+        case status = "status"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        html_attributions = try values.decodeIfPresent([String].self, forKey: .html_attributions)
+        result = try values.decodeIfPresent(PlaceDetail.self, forKey: .result)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
+    }
+}
+
+struct PlaceDetail : Codable {
+    let adr_address : String?
+    let business_status : String?
+    let formatted_address : String?
+    let formatted_phone_number : String?
+    let icon : String?
+    let icon_background_color : String?
+    let icon_mask_base_uri : String?
+    let international_phone_number : String?
+    let name : String?
+    let place_id : String?
+    let rating : Int?
+    let reference : String?
+    let types : [String]?
+    let url : String?
+    let user_ratings_total : Int?
+    let utc_offset : Int?
+    let vicinity : String?
+    let website : String?
+
+    enum CodingKeys: String, CodingKey {
+        case adr_address = "adr_address"
+        case business_status = "business_status"
+        case formatted_address = "formatted_address"
+        case formatted_phone_number = "formatted_phone_number"
+        case icon = "icon"
+        case icon_background_color = "icon_background_color"
+        case icon_mask_base_uri = "icon_mask_base_uri"
+        case international_phone_number = "international_phone_number"
+        case name = "name"
+        case place_id = "place_id"
+        case rating = "rating"
+        case reference = "reference"
+        case types = "types"
+        case url = "url"
+        case user_ratings_total = "user_ratings_total"
+        case utc_offset = "utc_offset"
+        case vicinity = "vicinity"
+        case website = "website"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        adr_address = try values.decodeIfPresent(String.self, forKey: .adr_address)
+        business_status = try values.decodeIfPresent(String.self, forKey: .business_status)
+        formatted_address = try values.decodeIfPresent(String.self, forKey: .formatted_address)
+        formatted_phone_number = try values.decodeIfPresent(String.self, forKey: .formatted_phone_number)
+        icon = try values.decodeIfPresent(String.self, forKey: .icon)
+        icon_background_color = try values.decodeIfPresent(String.self, forKey: .icon_background_color)
+        icon_mask_base_uri = try values.decodeIfPresent(String.self, forKey: .icon_mask_base_uri)
+        international_phone_number = try values.decodeIfPresent(String.self, forKey: .international_phone_number)
+        name = try values.decodeIfPresent(String.self, forKey: .name)
+        place_id = try values.decodeIfPresent(String.self, forKey: .place_id)
+        rating = try values.decodeIfPresent(Int.self, forKey: .rating)
+        reference = try values.decodeIfPresent(String.self, forKey: .reference)
+        types = try values.decodeIfPresent([String].self, forKey: .types)
+        url = try values.decodeIfPresent(String.self, forKey: .url)
+        user_ratings_total = try values.decodeIfPresent(Int.self, forKey: .user_ratings_total)
+        utc_offset = try values.decodeIfPresent(Int.self, forKey: .utc_offset)
+        vicinity = try values.decodeIfPresent(String.self, forKey: .vicinity)
+        website = try values.decodeIfPresent(String.self, forKey: .website)
     }
 }

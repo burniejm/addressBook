@@ -25,10 +25,11 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OwN-Uv-D16">
-                                <rect key="frame" x="20" y="802" width="374" height="40"/>
+                                <rect key="frame" x="107" y="802" width="200" height="40"/>
                                 <color key="backgroundColor" red="0.89128595590000004" green="0.29040896890000001" blue="0.2410948873" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="C57-Kf-4Zd"/>
+                                    <constraint firstAttribute="width" constant="200" id="atR-Or-lN4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -42,11 +43,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="d2O-Tv-fI5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="26F-HH-sVC"/>
+                            <constraint firstItem="OwN-Uv-D16" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KJw-gz-KXv"/>
                             <constraint firstItem="OwN-Uv-D16" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-20" id="PzA-yB-rni"/>
                             <constraint firstItem="OwN-Uv-D16" firstAttribute="top" secondItem="d2O-Tv-fI5" secondAttribute="bottom" constant="20" id="Tku-mT-j99"/>
                             <constraint firstItem="d2O-Tv-fI5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="UZx-HB-Vpp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OwN-Uv-D16" secondAttribute="trailing" constant="20" id="c1G-gg-8b0"/>
-                            <constraint firstItem="OwN-Uv-D16" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="eaG-QV-GLr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d2O-Tv-fI5" secondAttribute="trailing" id="lU9-Ky-ra8"/>
                         </constraints>
                     </view>

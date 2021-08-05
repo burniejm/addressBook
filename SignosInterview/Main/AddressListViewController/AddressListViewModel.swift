@@ -1,5 +1,5 @@
 //
-//  AddresListViewModel.swift
+//  AddressListViewModel.swift
 //  SignosInterview
 //
 //  Created by John Macy on 8/3/21.
@@ -41,7 +41,7 @@ class AddressListViewModel {
         }
     }
 
-    var filteredAddresses: [Place]? = [Place]() {
+    var filteredAddresses: [Place] = [Place]() {
         didSet {
             didUpdateAddressItems?()
         }
@@ -49,17 +49,23 @@ class AddressListViewModel {
 
     var filterType: AddressFilter = .All {
         didSet {
+            expandedCells.removeAll()
             filterAddresses()
         }
     }
 
     weak var delegate: AddressListViewModelDelegate?
-    var persistanceProvider: PlacesPersistanceProvider
     var didUpdateAddressItems: (() -> Void)?
+    var expandedCells = IndexSet()
 
-    init(delegate: AddressListViewModelDelegate, persistanceProvider: PlacesPersistanceProvider) {
+    private var persistenceProvider: PlacesPersistenceProvider
+
+    init(delegate: AddressListViewModelDelegate, persistenceProvider: PlacesPersistenceProvider) {
         self.delegate = delegate
-        self.persistanceProvider = persistanceProvider
+        self.persistenceProvider = persistenceProvider
+    }
+
+    func onViewAppeared() {
         loadAdresses()
     }
 
@@ -68,8 +74,7 @@ class AddressListViewModel {
     }
 
     func removeFilteredItem(index: Int) {
-        guard let filteredAddresses = filteredAddresses,
-              index < filteredAddresses.count else {
+        guard index < filteredAddresses.count else {
             return
         }
 
@@ -79,7 +84,22 @@ class AddressListViewModel {
             return
         }
 
+        //first remove from expanded cells...
+        expandedCells.remove(index)
+
+        //... then remove from list...
         addresses.remove(at: indexToRemove)
+
+        //... finally remove from persisted places
+        persistenceProvider.persistPlaces(addresses)
+    }
+
+    func rowSelected(index: Int) {
+        if expandedCells.contains(index) {
+            expandedCells.remove(index)
+        } else {
+            expandedCells.insert(index)
+        }
     }
 
     private func filterAddresses() {
@@ -97,7 +117,7 @@ class AddressListViewModel {
     }
 
     private func loadAdresses() {
-        persistanceProvider.seedPersistedPlaces()
-        addresses = persistanceProvider.getPersistedPlaces()
+        persistenceProvider.seedPersistedPlaces()
+        addresses = persistenceProvider.getPersistedPlaces()
     }
 }

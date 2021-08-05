@@ -6,17 +6,19 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PlacesAPI {
-    func searchLocations(searchString: String, completion: @escaping ((PlacesResponse?) -> Void))
-    func getPhoto(reference: String)
+    static func searchLocations(searchString: String, completion: @escaping ((PlacesResponse?) -> Void))
+    static func getPhoto(reference: String, maxHeight: Int, maxWidth: Int, completion: @escaping (UIImage?) -> Void)
+    static func getDetails(placeId: String, completion: @escaping (PlaceDetailResponse?) -> Void)
 }
 
 class PlacesService: PlacesAPI {
 
     private static let apiKey = "AIzaSyAYJk3vTAJCmrEjoq5zdNHsBERlwhdk1f4"
 
-    func searchLocations(searchString: String, completion: @escaping ((PlacesResponse?) -> Void)) {
+    static func searchLocations(searchString: String, completion: @escaping ((PlacesResponse?) -> Void)) {
         let searchAPIEndpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json?key=\(PlacesService.apiKey)&types=restaurant,supermarket,gym&query=\(searchString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")"
 
         guard let url = URL(string: searchAPIEndpoint) else { return }
@@ -27,7 +29,6 @@ class PlacesService: PlacesAPI {
 
             do {
                 let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let response = try decoder.decode(PlacesResponse.self, from: data)
                 completion(response)
             } catch {
@@ -38,7 +39,46 @@ class PlacesService: PlacesAPI {
         }.resume()
     }
 
-    func getPhoto(reference: String) {
-        let url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(reference)&key=\(PlacesService.apiKey)"
+    static func getPhoto(reference: String, maxHeight: Int, maxWidth: Int, completion: @escaping (UIImage?) -> Void) {
+        let photoEndpoint = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(reference)&key=\(PlacesService.apiKey)&maxheight=\(maxHeight)&maxwidth=\(maxWidth)"
+
+        guard let url = URL(string: photoEndpoint) else { return }
+
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, err == nil,
+                let image = UIImage(data: data)
+            else {
+                completion(nil)
+                return
+            }
+
+            completion(image)
+
+        }.resume()
+    }
+
+    static func getDetails(placeId: String, completion: @escaping (PlaceDetailResponse?) -> Void) {
+        let detailsEndpoint = "https://maps.googleapis.com/maps/api/place/details/json?key=\(PlacesService.apiKey)&place_id=\(placeId)"
+
+        guard let url = URL(string: detailsEndpoint) else { return }
+
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+
+            guard let data = data else { return }
+
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(PlaceDetailResponse.self, from: data)
+                completion(response)
+            } catch {
+                print(error)
+                completion(nil)
+            }
+
+        }.resume()
     }
 }

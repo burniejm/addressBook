@@ -9,10 +9,8 @@ import UIKit
 
 class SearchAddressViewController: UIViewController {
 
-    private static let reuseIdentifier = "SearchAddressCell"
-
-    @IBOutlet private var tableViewSearchResults: UITableView!
-    var viewModel: SearchAddressViewModel?
+    @IBOutlet private weak var tableViewSearchResults: UITableView!
+    var viewModel: SearchAddressViewModel!
 
     private lazy var searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
@@ -24,16 +22,16 @@ class SearchAddressViewController: UIViewController {
     }()
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         setupView()
         setupViewModel()
     }
 
     private func setupView() {
-        self.tableViewSearchResults.register(UITableViewCell.self, forCellReuseIdentifier: SearchAddressViewController.reuseIdentifier)
+        self.tableViewSearchResults.register(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: PlaceTableViewCell.reuseIdentifier)
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
     }
 
     private func setupViewModel() {
@@ -53,10 +51,19 @@ extension SearchAddressViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableViewSearchResults.dequeueReusableCell(withIdentifier: SearchAddressViewController.reuseIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else {
+            return UITableViewCell()
+        }
 
-        let place = viewModel?.searchResults[indexPath.row]
-        cell.textLabel?.text = place?.name
+        let place = viewModel.searchResults[indexPath.row]
+        cell.configure(place: place, showAddButton: true, isExpanded: viewModel.expandedCells.contains(indexPath.row))
+        cell.onAddButtonPressed = { [weak self] place in
+            self?.viewModel.addPlaceToMyAddresses(place)
+            self?.tableViewSearchResults.reloadRows(at: [indexPath], with: .automatic)
+        }
+        cell.onCallUnsupported = {
+            self.showError("Sorry, phone calls are not supported on this device.")
+        }
 
         return cell
     }
@@ -64,8 +71,9 @@ extension SearchAddressViewController: UITableViewDataSource {
 
 extension SearchAddressViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let place = viewModel?.searchResults[indexPath.row]
-        print("place Type:\(place!.addressType)")
+        tableView.deselectRow(at: indexPath, animated: false)
+        viewModel.rowSelected(index: indexPath.row)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 
@@ -80,3 +88,4 @@ extension SearchAddressViewController: UISearchBarDelegate {
         viewModel?.onCancelSearchPressed()
     }
 }
+

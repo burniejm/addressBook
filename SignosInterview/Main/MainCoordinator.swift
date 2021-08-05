@@ -13,6 +13,7 @@ protocol MainCoordinatorDelegate: AnyObject {
 final class MainCoordinator: Coordinator {
 
     weak var delegate: MainCoordinatorDelegate?
+    private var persistenceProvider = PlacesPersistenceProviderUserDefaults()
 
     var childCoordinators = [Coordinator]()
     var rootViewController: UIViewController? {
@@ -25,7 +26,7 @@ final class MainCoordinator: Coordinator {
 
     var addressListViewController: AddressListViewController {
         let viewController: AddressListViewController = UIStoryboard.main.getVC()
-        viewController.viewModel = AddressListViewModel(delegate: self, persistanceProvider: PlacesPersistanceProviderUserDefaults())
+        viewController.viewModel = AddressListViewModel(delegate: self, persistenceProvider: persistenceProvider)
         return viewController
     }
 
@@ -39,7 +40,7 @@ final class MainCoordinator: Coordinator {
 
     private func showNewAddress() {
         let controller: SearchAddressViewController = UIStoryboard.main.getVC()
-        controller.viewModel = SearchAddressViewModel()
+        controller.viewModel = SearchAddressViewModel(delegate: self, persistenceProvider: persistenceProvider)
         rootNavController?.pushViewController(controller, animated: true)
     }
 
@@ -52,4 +53,8 @@ extension MainCoordinator: AddressListViewModelDelegate {
     func didSelectNewAddress() {
         showNewAddress()
     }
+}
+
+extension MainCoordinator: SearchAddressViewModelDelegate {
+
 }
