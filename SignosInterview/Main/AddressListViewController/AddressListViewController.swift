@@ -71,6 +71,10 @@ extension AddressListViewController: UITableViewDataSource {
 
         cell.configure(place: place, showAddButton: false, isExpanded: viewModel.expandedCells.contains(indexPath.row))
 
+        cell.onCallUnsupported = {
+            self.showError("Sorry, phone calls are not supported on this device.")
+        }
+
         return cell
     }
 

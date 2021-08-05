@@ -28,6 +28,7 @@
 		EB5EC9A226BA480500C3E209 /* PlacesPersistenceProviderUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC9A126BA480500C3E209 /* PlacesPersistenceProviderUserDefaults.swift */; };
 		EB5EC9A426BA4BB800C3E209 /* Defaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5EC9A326BA4BB800C3E209 /* Defaults+Extensions.swift */; };
 		EB9A90F526BB8B0B009D12E2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9A90F426BB8B0B009D12E2 /* UIViewController+Extensions.swift */; };
+		EB9A90F726BB91F4009D12E2 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9A90F626BB91F4009D12E2 /* String+Extensions.swift */; };
 		EBCA24BA26BB354700CB0AD0 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCA24B926BB354700CB0AD0 /* PlaceTableViewCell.swift */; };
 		EBCA24BC26BB378300CB0AD0 /* PlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBCA24BB26BB378300CB0AD0 /* PlaceTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		EB5EC9A126BA480500C3E209 /* PlacesPersistenceProviderUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesPersistenceProviderUserDefaults.swift; sourceTree = "<group>"; };
 		EB5EC9A326BA4BB800C3E209 /* Defaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Extensions.swift"; sourceTree = "<group>"; };
 		EB9A90F426BB8B0B009D12E2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		EB9A90F626BB91F4009D12E2 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		EBCA24B926BB354700CB0AD0 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		EBCA24BB26BB378300CB0AD0 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,6 +190,7 @@
 				EB5EC98C26B9D4A400C3E209 /* UIStoryboard+Extensions.swift */,
 				EB5EC9A326BA4BB800C3E209 /* Defaults+Extensions.swift */,
 				EB9A90F426BB8B0B009D12E2 /* UIViewController+Extensions.swift */,
+				EB9A90F626BB91F4009D12E2 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				EB5EC98526B9D36000C3E209 /* Coordinator.swift in Sources */,
 				EB5EC98A26B9D3E700C3E209 /* MainCoordinator.swift in Sources */,
 				EB5EC99826BA1C6C00C3E209 /* SearchAddressViewController.swift in Sources */,
+				EB9A90F726BB91F4009D12E2 /* String+Extensions.swift in Sources */,
 				EB5EC99026B9D57D00C3E209 /* AddressListViewController.swift in Sources */,
 				EB9A90F526BB8B0B009D12E2 /* UIViewController+Extensions.swift in Sources */,
 				EB5EC99E26BA276D00C3E209 /* PlacesModel.swift in Sources */,

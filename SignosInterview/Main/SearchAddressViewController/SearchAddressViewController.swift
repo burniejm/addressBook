@@ -57,10 +57,12 @@ extension SearchAddressViewController: UITableViewDataSource {
 
         let place = viewModel.searchResults[indexPath.row]
         cell.configure(place: place, showAddButton: true, isExpanded: viewModel.expandedCells.contains(indexPath.row))
+
         cell.onAddButtonPressed = { [weak self] place in
             self?.viewModel.addPlaceToMyAddresses(place)
             self?.tableViewSearchResults.reloadRows(at: [indexPath], with: .automatic)
         }
+
         cell.onCallUnsupported = {
             self.showError("Sorry, phone calls are not supported on this device.")
         }

@@ -42,6 +42,7 @@ class PlaceTableViewCell: UITableViewCell {
         place = nil
         placeDetail = nil
         onAddButtonPressed = nil
+        onCallUnsupported = nil
         isExpanded = false
         lblAddress.text = ""
         lblName.text = ""
@@ -68,11 +69,18 @@ class PlaceTableViewCell: UITableViewCell {
         lblAddress.numberOfLines = isExpanded ? 2 : 1
         containerDetails.isHidden = !isExpanded
 
-        loadDetail()
-        loadPhoto()
+        if isExpanded {
+            loadDetail()
+            loadPhoto()
+        }
     }
 
     private func loadDetail() {
+        if placeDetail != nil {
+            //already loaded info
+            return
+        }
+
         if let placeId = self.place?.place_id {
             PlacesService.getDetails(placeId: placeId) { [weak self] response in
                 self?.placeDetail = response?.result
@@ -94,7 +102,7 @@ class PlaceTableViewCell: UITableViewCell {
             return
         }
 
-        if let url = URL(string: "tel://\(phoneNum)") {
+        if let url = URL(string: "tel://\(phoneNum.digits)") {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
             } else {
@@ -115,8 +123,23 @@ class PlaceTableViewCell: UITableViewCell {
                     self?.imgPlace.image = img
                 }
             }
-        } else {
-            self.imgPlace.image = UIImage.init(named: "no_image")
+            return
         }
+
+        if let address = self.place?.formatted_address, let lat = self.place?.geometry?.location?.lat, let lng = self.place?.geometry?.location?.lng {
+            PlacesService.getMapPhoto(address: address, lat: lat, long: lng, width: 180, height: 180) { [weak self] img in
+                DispatchQueue.main.async {
+                    guard let img = img else {
+                        self?.imgPlace.image = UIImage.init(named: "no_image")
+                        return
+                    }
+
+                    self?.imgPlace.image = img
+                }
+            }
+            return
+        }
+
+        self.imgPlace.image = UIImage.init(named: "no_image")
     }
 }

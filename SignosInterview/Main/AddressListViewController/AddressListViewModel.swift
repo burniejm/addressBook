@@ -14,8 +14,6 @@ enum AddressFilter: String, CaseIterable {
     case Supermarkets
 
     func addressType() -> AddressType? {
-        //TODO: do i really need this?
-
         switch self {
 
         case .All:
@@ -117,7 +115,6 @@ class AddressListViewModel {
     }
 
     private func loadAdresses() {
-        persistenceProvider.seedPersistedPlaces()
         addresses = persistenceProvider.getPersistedPlaces()
     }
 }

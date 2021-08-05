@@ -85,6 +85,7 @@ class SearchAddressViewModel {
 
             DispatchQueue.main.async {
                 self?.searchResults.removeAll()
+                self?.expandedCells.removeAll()
 
                 guard let results = response.results else {
                     return

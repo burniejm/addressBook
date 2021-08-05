@@ -28,6 +28,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TuA-gx-t2c">
                                 <rect key="frame" x="0.0" y="40" width="398" height="185"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CfQ-v4-r1e">
+                                        <rect key="frame" x="0.0" y="148" width="80" height="40"/>
+                                        <color key="backgroundColor" red="0.89128595590000004" green="0.29040896890000001" blue="0.2410948873" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="9LM-0g-TnI"/>
+                                            <constraint firstAttribute="width" constant="80" id="I9w-gg-MAW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="ADD"/>
+                                        <connections>
+                                            <action selector="btnAddPressed:" destination="zOJ-0c-Qh5" eventType="touchUpInside" id="JoI-bL-c2H"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgc-NQ-0Ny">
                                         <rect key="frame" x="0.0" y="8" width="210" height="21"/>
                                         <constraints>
@@ -62,20 +76,6 @@
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="(318) 564-3793"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CfQ-v4-r1e">
-                                        <rect key="frame" x="0.0" y="148" width="80" height="40"/>
-                                        <color key="backgroundColor" red="0.89128595590000004" green="0.29040896890000001" blue="0.2410948873" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="9LM-0g-TnI"/>
-                                            <constraint firstAttribute="width" constant="80" id="I9w-gg-MAW"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="ADD"/>
-                                        <connections>
-                                            <action selector="btnAddPressed:" destination="zOJ-0c-Qh5" eventType="touchUpInside" id="JoI-bL-c2H"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

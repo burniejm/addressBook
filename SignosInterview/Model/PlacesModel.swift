@@ -42,6 +42,7 @@ struct Place : Codable, Equatable {
 
     let business_status : String?
     let formatted_address : String?
+    let geometry : Geometry?
     let icon : String?
     let name : String?
     let photos : [Photo]?
@@ -55,6 +56,7 @@ struct Place : Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case business_status = "business_status"
         case formatted_address = "formatted_address"
+        case geometry = "geometry"
         case icon = "icon"
         case name = "name"
         case photos = "photos"
@@ -69,6 +71,7 @@ struct Place : Codable, Equatable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         business_status = try values.decodeIfPresent(String.self, forKey: .business_status)
         formatted_address = try values.decodeIfPresent(String.self, forKey: .formatted_address)
+        geometry = try values.decodeIfPresent(Geometry.self, forKey: .geometry)
         icon = try values.decodeIfPresent(String.self, forKey: .icon)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         photos = try values.decodeIfPresent([Photo].self, forKey: .photos)
@@ -98,19 +101,37 @@ struct Place : Codable, Equatable {
             return
         }
     }
+}
 
-    init(businessStatus: String = "", formattedAddress: String = "", icon: String = "", name: String = "", placeId: String = "", reference: String = "", rating: Double = 0, addressType: AddressType) {
-        self.business_status = businessStatus
-        self.formatted_address = formattedAddress
-        self.icon = icon
-        self.name = name
-        self.photos = nil
-        self.place_id = placeId
-        self.reference = reference
-        self.rating = rating
-        self.types = nil
-        self.addressType = addressType
+struct Geometry : Codable {
+    let location : Location?
+
+    enum CodingKeys: String, CodingKey {
+        case location = "location"
     }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        location = try values.decodeIfPresent(Location.self, forKey: .location)
+    }
+
+}
+
+struct Location : Codable {
+    let lat : Double?
+    let lng : Double?
+
+    enum CodingKeys: String, CodingKey {
+        case lat = "lat"
+        case lng = "lng"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        lat = try values.decodeIfPresent(Double.self, forKey: .lat)
+        lng = try values.decodeIfPresent(Double.self, forKey: .lng)
+    }
+
 }
 
 struct Photo : Codable {
@@ -166,7 +187,7 @@ struct PlaceDetail : Codable {
     let international_phone_number : String?
     let name : String?
     let place_id : String?
-    let rating : Int?
+    let rating : Double?
     let reference : String?
     let types : [String]?
     let url : String?
@@ -208,7 +229,7 @@ struct PlaceDetail : Codable {
         international_phone_number = try values.decodeIfPresent(String.self, forKey: .international_phone_number)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         place_id = try values.decodeIfPresent(String.self, forKey: .place_id)
-        rating = try values.decodeIfPresent(Int.self, forKey: .rating)
+        rating = try values.decodeIfPresent(Double.self, forKey: .rating)
         reference = try values.decodeIfPresent(String.self, forKey: .reference)
         types = try values.decodeIfPresent([String].self, forKey: .types)
         url = try values.decodeIfPresent(String.self, forKey: .url)
