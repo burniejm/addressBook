@@ -81,11 +81,11 @@ extension SearchAddressViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        let place = viewModel.searchResults[indexPath.row]
-        cell.configure(place: place, showAddButton: true, isExpanded: viewModel.expandedCells.contains(indexPath.row))
+        let placeVM = PlaceViewModel(place: viewModel.searchResults[indexPath.row])
+        cell.configure(placeVM: placeVM, showAddButton: true, isExpanded: viewModel.expandedCells.contains(indexPath.row))
 
-        cell.onAddButtonPressed = { [weak self] place in
-            self?.viewModel.addPlaceToMyAddresses(place)
+        cell.onAddButtonPressed = { [weak self] placeVM in
+            self?.viewModel.addPlaceToMyAddresses(placeVM.place)
         }
 
         cell.onCallUnsupported = {

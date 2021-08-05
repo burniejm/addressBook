@@ -25,44 +25,58 @@ class PlaceTableViewCell: UITableViewCell {
         }
     }
 
-    var onAddButtonPressed: ((Place) -> Void)?
+    var onAddButtonPressed: ((PlaceViewModel) -> Void)?
     var onCallUnsupported: (() -> Void)?
 
-    private var place: Place?
-    private var placeDetail: PlaceDetail?
+    private var placeVM: PlaceViewModel?
 
     @IBAction private func btnAddPressed(_ sender: Any) {
-        guard let place = place else {
+        guard let placeVM = placeVM else {
             return
         }
-        onAddButtonPressed?(place)
+        onAddButtonPressed?(placeVM)
     }
 
     override func prepareForReuse() {
-        place = nil
-        placeDetail = nil
+        placeVM = nil
         onAddButtonPressed = nil
         onCallUnsupported = nil
         isExpanded = false
         lblAddress.text = ""
         lblName.text = ""
         lblType.text = ""
-        imgPlace.image = nil
         btnPhone.isHidden = true
         btnPhone.setTitle(nil, for: .normal)
+        btnPhone.removeTarget(self, action: #selector(callPhone), for: .touchUpInside)
     }
 
-    func configure(place: Place, showAddButton: Bool, isExpanded: Bool) {
-        self.place = place
+    func configure(placeVM: PlaceViewModel, showAddButton: Bool, isExpanded: Bool) {
+        self.placeVM = placeVM
         self.isExpanded = isExpanded
         selectionStyle = .none
 
         btnAdd.isHidden = !showAddButton
         self.btnPhone.isHidden = true
 
-        lblAddress.text = place.formatted_address
-        lblName.text = place.name
-        lblType.text = place.addressType?.rawValue
+        lblAddress.text = placeVM.address()
+        lblName.text = placeVM.name()
+        lblType.text = placeVM.addressType()?.rawValue
+
+        placeVM.onPlaceDetailLoaded = { [weak self] in
+            if let phoneNum = placeVM.placeDetail?.formatted_phone_number {
+                DispatchQueue.main.async {
+                    self?.btnPhone.setTitle(phoneNum, for: .normal)
+                    self?.btnPhone.isHidden = false
+                    self?.btnPhone.addTarget(self, action: #selector(self?.callPhone), for: .touchUpInside)
+                }
+            }
+        }
+
+        placeVM.onPlaceImageLoaded = { [weak self] in
+            DispatchQueue.main.async {
+                self?.imgPlace.image = placeVM.placeImage
+            }
+        }
     }
 
     private func updateForExpansion() {
@@ -70,76 +84,20 @@ class PlaceTableViewCell: UITableViewCell {
         containerDetails.isHidden = !isExpanded
 
         if isExpanded {
-            loadDetail()
-            loadPhoto()
-        }
-    }
-
-    private func loadDetail() {
-        if placeDetail != nil {
-            //already loaded info
-            return
-        }
-
-        if let placeId = self.place?.place_id {
-            PlacesService.getDetails(placeId: placeId) { [weak self] response in
-                self?.placeDetail = response?.result
-
-                DispatchQueue.main.async {
-                    if let phoneNum = response?.result?.formatted_phone_number {
-                        self?.btnPhone.setTitle(phoneNum, for: .normal)
-                        self?.btnPhone.isHidden = false
-                        self?.btnPhone.addTarget(self, action: #selector(self?.callPhone), for: .touchUpInside)
-                    }
-                }
-            }
+            placeVM?.loadDetail()
+            placeVM?.getPlacePhoto()
         }
     }
 
     @objc private func callPhone() {
-        guard let placeDetail = placeDetail,
-              let phoneNum = placeDetail.formatted_phone_number else {
-            return
-        }
+        guard let phoneNum = placeVM?.phoneNumber() else { return }
 
-        if let url = URL(string: "tel://\(phoneNum.digits)") {
+        if let url = URL(string: "tel://\(phoneNum)") {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
             } else {
                 onCallUnsupported?()
             }
         }
-    }
-
-    private func loadPhoto() {
-        if let photoRef = self.place?.photos?.first?.photo_reference {
-            PlacesService.getPhoto(reference: photoRef, maxHeight: 180, maxWidth: 180) { [weak self] img in
-                DispatchQueue.main.async {
-                    guard let img = img else {
-                        self?.imgPlace.image = UIImage.init(named: "no_image")
-                        return
-                    }
-
-                    self?.imgPlace.image = img
-                }
-            }
-            return
-        }
-
-        if let address = self.place?.formatted_address, let lat = self.place?.geometry?.location?.lat, let lng = self.place?.geometry?.location?.lng {
-            PlacesService.getMapPhoto(address: address, lat: lat, long: lng, width: 180, height: 180) { [weak self] img in
-                DispatchQueue.main.async {
-                    guard let img = img else {
-                        self?.imgPlace.image = UIImage.init(named: "no_image")
-                        return
-                    }
-
-                    self?.imgPlace.image = img
-                }
-            }
-            return
-        }
-
-        self.imgPlace.image = UIImage.init(named: "no_image")
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    //https://stackoverflow.com/questions/29971505/filter-non-digits-from-string
     var digits: String {
         components(separatedBy: CharacterSet.decimalDigits.inverted)
             .joined()
