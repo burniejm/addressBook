@@ -29,7 +29,13 @@ class PlacesService: PlacesAPI {
 
         URLSession.shared.dataTask(with: url) { (data, response, err) in
 
-            guard let data = data else { return }
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let data = data, err == nil
+            else {
+                completion(nil)
+                return
+            }
 
             do {
                 let decoder = JSONDecoder()
@@ -71,10 +77,6 @@ class PlacesService: PlacesAPI {
     static func getMapPhoto(address: String, lat: Double, long: Double, width: Int, height: Int, completion: @escaping (UIImage?) -> Void) {
         let mapPhotoEndpoint = "https://maps.googleapis.com/maps/api/staticmap?center=\(address.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")&zoom=13&size=\(width)x\(height)&maptype=roadmap&key=\(PlacesService.apiKey)&markers=color:red%7C\(lat),\(long)"
 
-
-        //&markers=color:blue%7Clabel:S%7C40.702147,-74.015794
-        print(mapPhotoEndpoint)
-
         guard let url = URL(string: mapPhotoEndpoint) else {
             completion(nil)
             return
@@ -107,7 +109,13 @@ class PlacesService: PlacesAPI {
 
         URLSession.shared.dataTask(with: url) { (data, response, err) in
 
-            guard let data = data else { return }
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let data = data, err == nil
+            else {
+                completion(nil)
+                return
+            }
 
             do {
                 let decoder = JSONDecoder()

@@ -34,6 +34,8 @@ class SearchAddressViewModel {
         }
     }
 
+    var onSearchStarted: (() -> Void)?
+    var onSearchFinished: (() -> Void)?
     var onSearchResultsChanged: (() -> Void)?
     var expandedCells = IndexSet()
 
@@ -78,12 +80,15 @@ class SearchAddressViewModel {
             return
         }
 
+        onSearchStarted?()
+
         PlacesService.searchLocations(searchString: searchText) { [weak self] response in
             guard let response = response else {
                 return
             }
 
             DispatchQueue.main.async {
+                self?.onSearchFinished?()
                 self?.searchResults.removeAll()
                 self?.expandedCells.removeAll()
 

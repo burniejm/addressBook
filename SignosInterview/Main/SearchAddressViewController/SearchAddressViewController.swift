@@ -21,6 +21,12 @@ class SearchAddressViewController: UIViewController {
         return controller
     }()
 
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.startAnimating()
+        return indicator
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -38,6 +44,22 @@ class SearchAddressViewController: UIViewController {
         viewModel?.onSearchResultsChanged = { [weak self] in
             self?.tableViewSearchResults.reloadData()
         }
+
+        viewModel.onSearchStarted = { [weak self] in
+            self?.addSpinner()
+        }
+
+        viewModel.onSearchFinished = { [weak self] in
+            self?.removeSpinner()
+        }
+    }
+
+    private func addSpinner() {
+        tableViewSearchResults.backgroundView = activityIndicator
+    }
+
+    private func removeSpinner() {
+        tableViewSearchResults.backgroundView = nil
     }
 }
 

@@ -3,7 +3,8 @@
 //  SignosInterview
 //
 //  Created by John Macy on 8/3/21.
-//
+
+// https://elmland.blog/2018/12/17/save-load-structs-userdefaults/
 
 import Foundation
 

@@ -13,6 +13,12 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 
+enum AddressType: String, Codable {
+    case Gym
+    case Restaurant
+    case Supermarket
+}
+
 struct PlacesResponse: Codable {
     let html_attributions : [String]?
     let next_page_token : String?
