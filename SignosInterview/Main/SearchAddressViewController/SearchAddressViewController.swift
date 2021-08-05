@@ -42,7 +42,7 @@ class SearchAddressViewController: UIViewController {
 
     private func setupViewModel() {
         viewModel?.onSearchResultsChanged = { [weak self] in
-            self?.tableViewSearchResults.reloadData()
+            self?.tableViewSearchResults.reloadSections([0], with: .automatic)
         }
 
         viewModel.onSearchStarted = { [weak self] in
@@ -51,6 +51,10 @@ class SearchAddressViewController: UIViewController {
 
         viewModel.onSearchFinished = { [weak self] in
             self?.removeSpinner()
+        }
+
+        viewModel.onAddressAlreadyAdded = { [weak self] in
+            self?.showError("This address has already been added.")
         }
     }
 
@@ -82,7 +86,6 @@ extension SearchAddressViewController: UITableViewDataSource {
 
         cell.onAddButtonPressed = { [weak self] place in
             self?.viewModel.addPlaceToMyAddresses(place)
-            self?.tableViewSearchResults.reloadRows(at: [indexPath], with: .automatic)
         }
 
         cell.onCallUnsupported = {

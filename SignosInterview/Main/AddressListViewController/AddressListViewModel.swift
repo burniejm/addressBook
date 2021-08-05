@@ -41,7 +41,7 @@ class AddressListViewModel {
 
     var filteredAddresses: [Place] = [Place]() {
         didSet {
-            didUpdateAddressItems?()
+            onAddressItemsChanged?()
         }
     }
 
@@ -53,7 +53,7 @@ class AddressListViewModel {
     }
 
     weak var delegate: AddressListViewModelDelegate?
-    var didUpdateAddressItems: (() -> Void)?
+    var onAddressItemsChanged: (() -> Void)?
     var expandedCells = IndexSet()
 
     private var persistenceProvider: PlacesPersistenceProvider

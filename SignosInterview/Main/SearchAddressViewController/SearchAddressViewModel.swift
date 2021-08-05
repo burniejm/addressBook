@@ -36,6 +36,7 @@ class SearchAddressViewModel {
 
     var onSearchStarted: (() -> Void)?
     var onSearchFinished: (() -> Void)?
+    var onAddressAlreadyAdded: (() -> Void)?
     var onSearchResultsChanged: (() -> Void)?
     var expandedCells = IndexSet()
 
@@ -58,20 +59,32 @@ class SearchAddressViewModel {
     }
 
     func addPlaceToMyAddresses(_ place: Place) {
+        if isAddressAlreadyAdded(place: place) {
+            onAddressAlreadyAdded?()
+            return
+        }
+
         //Persist place...
         var places = persistenceProvider.getPersistedPlaces()
         places.append(place)
         persistenceProvider.persistPlaces(places)
 
-        guard let index = searchResults.firstIndex(of: place) else {
+        guard let indexToRemove = searchResults.firstIndex(of: place) else {
             return
         }
 
         //... then remove from expanded cell list
-        expandedCells.remove(index)
+        expandedCells.remove(indexToRemove)
 
         //... then remove from the list of search results
-        searchResults.remove(at: index)
+        searchResults.remove(at: indexToRemove)
+    }
+
+    private func isAddressAlreadyAdded(place: Place) -> Bool {
+        let places = persistenceProvider.getPersistedPlaces()
+        return places.contains { p in
+            p.place_id == place.place_id
+        }
     }
 
     private func performSearch() {

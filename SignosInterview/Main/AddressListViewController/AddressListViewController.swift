@@ -43,7 +43,7 @@ class AddressListViewController: UIViewController {
     }
 
     private func configureViewModel() {
-        viewModel.didUpdateAddressItems = { [weak self] in
+        viewModel.onAddressItemsChanged = { [weak self] in
             self?.tableViewAddresses.reloadSections([0], with: .automatic)
         }
     }
