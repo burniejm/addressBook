@@ -15,22 +15,62 @@ protocol PlacesAPI {
     static func getMapPhoto(address: String, lat: Double, long: Double, width: Int, height: Int, completion: @escaping (UIImage?) -> Void)
 }
 
+protocol Endpoint {
+    var baseURLString: String { get }
+    var path: String { get }
+    var apiKey: String { get }
+}
+
+extension Endpoint {
+    var url: String {
+        return baseURLString + path
+    }
+}
+
+enum APIError: Error {
+    case MalformedURL
+}
+
+enum GoogleApiEndpoints: Endpoint {
+    case searchPlaces(searchString: String)
+    case getPhoto(reference: String, maxHeight: Int, maxWidth: Int)
+    case getPlaceDetails(placeId: String)
+    case getStaticMapPhoto(address: String, lat: Double, long: Double, width: Int, height: Int)
+
+    var baseURLString: String {
+        return "https://maps.googleapis.com/maps/api/"
+    }
+
+    var apiKey: String {
+        return "AIzaSyAYJk3vTAJCmrEjoq5zdNHsBERlwhdk1f4"
+    }
+
+    var path: String {
+        switch self {
+        case .searchPlaces(let searchString):
+            return "place/textsearch/json?key=\(apiKey)&types=restaurant,supermarket,gym&query=\(searchString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")"
+
+        case .getPhoto(let reference, let maxHeight, let maxWidth):
+            return "place/photo?maxwidth=400&photoreference=\(reference)&key=\(apiKey)&maxheight=\(maxHeight)&maxwidth=\(maxWidth)"
+
+        case .getPlaceDetails(let placeId):
+            return "place/details/json?key=\(apiKey)&place_id=\(placeId)"
+
+        case .getStaticMapPhoto(let address, let lat, let long, let width, let height):
+            return "staticmap?center=\(address.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")&zoom=13&size=\(width)x\(height)&maptype=roadmap&key=\(apiKey)&markers=color:red%7C\(lat),\(long)"
+        }
+    }
+}
+
 class PlacesService: PlacesAPI {
 
-    private static let apiKey = "AIzaSyAYJk3vTAJCmrEjoq5zdNHsBERlwhdk1f4"
-
     static func searchLocations(searchString: String, completion: @escaping ((PlacesResponse?) -> Void)) {
-        let searchAPIEndpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json?key=\(PlacesService.apiKey)&types=restaurant,supermarket,gym&query=\(searchString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")"
+        let endpoint = GoogleApiEndpoints.searchPlaces(searchString: searchString)
 
-        guard let url = URL(string: searchAPIEndpoint) else {
-            completion(nil)
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-
+        request(endpoint: endpoint) { data, response, err in
             guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let httpURLResponse = response as? HTTPURLResponse,
+                httpURLResponse.statusCode == 200,
                 let data = data, err == nil
             else {
                 completion(nil)
@@ -45,22 +85,16 @@ class PlacesService: PlacesAPI {
                 print(error)
                 completion(nil)
             }
-
-        }.resume()
+        }
     }
 
     static func getPhoto(reference: String, maxHeight: Int, maxWidth: Int, completion: @escaping (UIImage?) -> Void) {
-        let photoEndpoint = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(reference)&key=\(PlacesService.apiKey)&maxheight=\(maxHeight)&maxwidth=\(maxWidth)"
+        let endpoint = GoogleApiEndpoints.getPhoto(reference: reference, maxHeight: maxHeight, maxWidth: maxWidth)
 
-        guard let url = URL(string: photoEndpoint) else {
-            completion(nil)
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-
+        request(endpoint: endpoint) { data, response, err in
             guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let httpURLResponse = response as? HTTPURLResponse,
+                httpURLResponse.statusCode == 200,
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, err == nil,
                 let image = UIImage(data: data)
@@ -70,22 +104,16 @@ class PlacesService: PlacesAPI {
             }
 
             completion(image)
-
-        }.resume()
+        }
     }
 
     static func getMapPhoto(address: String, lat: Double, long: Double, width: Int, height: Int, completion: @escaping (UIImage?) -> Void) {
-        let mapPhotoEndpoint = "https://maps.googleapis.com/maps/api/staticmap?center=\(address.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "")&zoom=13&size=\(width)x\(height)&maptype=roadmap&key=\(PlacesService.apiKey)&markers=color:red%7C\(lat),\(long)"
+        let endpoint = GoogleApiEndpoints.getStaticMapPhoto(address: address, lat: lat, long: long, width: width, height: height)
 
-        guard let url = URL(string: mapPhotoEndpoint) else {
-            completion(nil)
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-
+        request(endpoint: endpoint) { data, response, err in
             guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let httpURLResponse = response as? HTTPURLResponse,
+                httpURLResponse.statusCode == 200,
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, err == nil,
                 let image = UIImage(data: data)
@@ -95,22 +123,16 @@ class PlacesService: PlacesAPI {
             }
 
             completion(image)
-
-        }.resume()
+        }
     }
 
     static func getDetails(placeId: String, completion: @escaping (PlaceDetailResponse?) -> Void) {
-        let detailsEndpoint = "https://maps.googleapis.com/maps/api/place/details/json?key=\(PlacesService.apiKey)&place_id=\(placeId)"
+        let endpoint = GoogleApiEndpoints.getPlaceDetails(placeId: placeId)
 
-        guard let url = URL(string: detailsEndpoint) else {
-            completion(nil)
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-
+        request(endpoint: endpoint) { data, response, err in
             guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let httpURLResponse = response as? HTTPURLResponse,
+                httpURLResponse.statusCode == 200,
                 let data = data, err == nil
             else {
                 completion(nil)
@@ -125,7 +147,22 @@ class PlacesService: PlacesAPI {
                 print(error)
                 completion(nil)
             }
+        }
+    }
 
-        }.resume()
+    private static func request(endpoint: Endpoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        guard let url = URL(string: endpoint.url) else {
+            completion(nil, nil, APIError.MalformedURL)
+            return
+        }
+
+        let session = URLSession.shared
+        let urlRequest = URLRequest(url: url)
+
+        let task = session.dataTask(with: urlRequest) { data, response, error in
+            completion(data, response, error)
+        }
+
+        task.resume()
     }
 }
