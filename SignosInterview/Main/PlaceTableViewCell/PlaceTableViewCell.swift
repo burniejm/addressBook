@@ -42,9 +42,10 @@ class PlaceTableViewCell: UITableViewCell {
         onAddButtonPressed = nil
         onCallUnsupported = nil
         isExpanded = false
-        lblAddress.text = ""
-        lblName.text = ""
-        lblType.text = ""
+        lblAddress.text = nil
+        lblAddress.attributedText = nil
+        lblName.text = nil
+        lblType.text = nil
         btnPhone.isHidden = true
         btnPhone.setTitle(nil, for: .normal)
         btnPhone.removeTarget(self, action: #selector(callPhone), for: .touchUpInside)
