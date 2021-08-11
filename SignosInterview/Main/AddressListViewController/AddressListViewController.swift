@@ -83,7 +83,15 @@ extension AddressListViewController: UITableViewDataSource {
         }
         deleteAction.image = UIImage(systemName: "trash")
         deleteAction.backgroundColor = .systemRed
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+
+        let pinTitle = viewModel.filteredAddresses[indexPath.row].isPinned ? "UnPin" : "Pin"
+
+        let pinAction = UIContextualAction(style: .normal, title: pinTitle) { [weak self] (_, _, completionHandler) in
+            self?.viewModel?.setFilteredAddressPinned(index: indexPath.row)
+            completionHandler(true)
+        }
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, pinAction])
         return configuration
     }
 }

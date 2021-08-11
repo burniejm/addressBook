@@ -57,6 +57,7 @@ struct Place : Codable, Equatable {
     let reference : String?
     let types : [String]?
 
+    var isPinned: Bool
     var addressType: AddressType?
 
     enum CodingKeys: String, CodingKey {
@@ -71,6 +72,7 @@ struct Place : Codable, Equatable {
         case reference = "reference"
         case types = "types"
         case addressType = "addressType"
+        case isPinned = "isPinned"
     }
 
     init(from decoder: Decoder) throws {
@@ -86,6 +88,7 @@ struct Place : Codable, Equatable {
         reference = try values.decodeIfPresent(String.self, forKey: .reference)
         types = try values.decodeIfPresent([String].self, forKey: .types)
         addressType = try values.decodeIfPresent(AddressType.self, forKey: .addressType)
+        isPinned = try values.decodeIfPresent(Bool.self, forKey: .isPinned) ?? false
 
         //Map their types to mine
         guard let types = types else {

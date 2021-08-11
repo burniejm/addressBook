@@ -102,4 +102,27 @@ class PlaceViewModel {
 
         placeImage = noImage
     }
+
+    func setAddressLabelText(_ label: UILabel) {
+        guard let address = address() else {
+            label.text = ""
+            return
+        }
+
+        guard place.isPinned else {
+            label.text = address
+            return
+        }
+
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(systemName: "pin")
+        let imageOffsetY: CGFloat = -5.0
+        imageAttachment.bounds = CGRect(x: 0, y: imageOffsetY, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        let completeText = NSMutableAttributedString(string: "")
+        completeText.append(attachmentString)
+        let textAfterIcon = NSAttributedString(string: address)
+        completeText.append(textAfterIcon)
+        label.attributedText = completeText
+    }
 }

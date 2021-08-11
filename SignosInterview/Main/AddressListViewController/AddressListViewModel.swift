@@ -72,6 +72,23 @@ class AddressListViewModel {
         delegate?.didSelectNewAddress()
     }
 
+    func setFilteredAddressPinned(index: Int) {
+        guard index < filteredAddresses.count else {
+            return
+        }
+
+        let filteredPlace = filteredAddresses[index]
+
+        guard let indexToPin = addresses.firstIndex(of: filteredPlace) else {
+            return
+        }
+
+        let isPinned = addresses[indexToPin].isPinned
+
+        addresses[indexToPin].isPinned = !isPinned
+        persistenceProvider.persistPlaces(addresses)
+    }
+
     func removeFilteredItem(index: Int) {
         guard index < filteredAddresses.count else {
             return
@@ -102,17 +119,25 @@ class AddressListViewModel {
     }
 
     private func filterAddresses() {
+        var filtered = filteredAddresses
+
         switch filterType {
         case .All:
-            filteredAddresses = addresses
+            filtered = addresses
             break
 
         default:
-            filteredAddresses = addresses.filter({ item in
+            filtered = addresses.filter({ item in
                 return item.addressType == filterType.addressType()
             })
             break
         }
+
+        filtered.sort { p1, p2 in
+            return p1.isPinned
+        }
+
+        filteredAddresses = filtered
     }
 
     private func loadAdresses() {
